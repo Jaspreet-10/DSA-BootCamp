@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int fibNumber(int n,unordered_map<int,int>&memo){
+        if(n==0) return 0;
+        if(n==1) return 1;
+        int currentKey=n;
+        if(memo[currentKey]>0)
+            return memo[currentKey];
+        memo[currentKey]=fibNumber(n-1,memo)+fibNumber(n-2,memo);
+        return memo[currentKey];
+    }
+    int fib(int n) {
+        unordered_map<int,int>memo;
+        return fibNumber(n,memo);
+    }
+};

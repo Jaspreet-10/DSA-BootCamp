@@ -1,0 +1,17 @@
+class Solution {
+  public:
+    int Jump(int index,int A[],int n){
+        if(index == n-1)
+            return 1;
+        if(index>=n)
+            return 0;
+        for(int i=1;i<=A[index];++i){
+            if(Jump(index+i,A,n))
+                return 1;
+        }
+        return 0;
+    }
+    int canReach(int A[], int N) {
+        return Jump(0,A,N);
+    }
+};

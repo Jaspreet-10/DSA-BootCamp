@@ -1,0 +1,22 @@
+class Solution{   
+public:
+    bool subsetSum(int index,int n,vector<int>arr,int sum,vector<vector<int>>&dp){
+        if(sum == 0)
+            return 1;
+        if(index>=n)
+            return 0;
+        if(dp[index][sum]!=-1)
+            return dp[index][sum];
+        int consider = 0;
+        if(arr[index]<=sum){
+            consider = subsetSum(index+1,n,arr,sum-arr[index],dp);
+        }
+        int notConsider = subsetSum(index+1,n,arr,sum,dp);
+            dp[index][sum] = consider||notConsider;
+        return dp[index][sum];
+    }
+    bool isSubsetSum(vector<int>arr, int sum){
+       vector<vector<int>>dp(arr.size()+1,vector<int>(sum+1,-1));
+       return subsetSum(0,arr.size(),arr,sum,dp);
+    }
+};

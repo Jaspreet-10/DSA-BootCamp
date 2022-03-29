@@ -1,0 +1,27 @@
+class Solution
+{
+    public:
+         int knapSack(int W, int wt[], int val[], int n) 
+    { 
+        unordered_map<string, int>m;
+       return maxProfit(W, wt, val, n, 0, m);
+    }
+private:
+    int maxProfit(int capacity, int weights[], int profit[], int n, int CI, unordered_map<string, int>&m){
+        if(CI >= n)
+            return 0;
+        
+        string key = to_string(CI) + "-" + to_string(capacity);
+        if(m.find(key) != m.end())
+            return m[key];
+        
+        int weightConsider = 0;
+        if(capacity >= weights[CI])
+            weightConsider = profit[CI] + maxProfit(capacity-weights[CI], weights, profit, n, CI+1, m);
+            
+        int doNotConsider = maxProfit(capacity, weights, profit, n, CI+1, m);
+        
+        m[key] = max(weightConsider, doNotConsider);
+        return m[key];
+    }
+};

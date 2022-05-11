@@ -1,0 +1,30 @@
+int maxDecimalValue(vector<vector<int>>mat,int r,int c,int p,int row,int col,vector<vector<int>>&dp){
+    if(r>=row || c>=col){
+        return 0;
+    }
+    if(dp[r][c]!=-1)
+        return dp[r][c];
+    
+    int right = mat[r][c]*pow(2,p)+maxDecimalValue(mat,r+1,c,p+1,row,col,dp);
+    int down = mat[r][c]*pow(2,p)+maxDecimalValue(mat,r,c+1,p+1,row,col,dp);
+    
+    dp[r][c] = max(down,right);
+    return dp[r][c];
+}
+
+int main()
+{
+    int r,c;
+    cin>>r>>c;
+    vector<vector<int>>mat(r+1,vector<int>(c+1,-1));
+    for(int i = 0 ; i < r ; ++i){
+        for(int j = 0 ; j < c ; ++j){
+            int val;
+            cin>>val;
+            mat[i][j]=val;
+        }
+    }
+    vector<vector<int>>dp(r+1,vector<int>(c+1,-1));
+    cout << maxDecimalValue(mat, 0, 0, 0,r,c,dp) << endl;
+    return 0;
+}

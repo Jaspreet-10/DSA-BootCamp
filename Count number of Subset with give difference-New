@@ -1,0 +1,27 @@
+int totalWays(vector<int>& nums,int index,int target,int n,map<pair<int,int>,int>&memo){
+        if(index==n && target==0)
+            return 1;
+        
+        if(index==n && target!=0)
+            return 0;
+        pair<int,int>currentKey={index,target};
+        if(memo.find(currentKey)!=memo.end())
+            return memo[currentKey];
+        
+        int consider=totalWays(nums,index+1,target-nums[index],n,memo);
+        int notConsider=totalWays(nums,index+1,target,n,memo);
+        
+        memo[currentKey] = consider+notConsider;
+        
+        return memo[currentKey];
+    }
+int main() {
+    vector<int>nums = {2,4,1,3};
+    int sum=0,X=4; 
+    for(int i = 0 ; i < nums.size() ; ++i) //Will use the logic S1+S2 = S
+//                                           S1-S2=X. will figure out S1=(S-X)/2 from this
+        sum+=nums[i];
+    int target = (sum-X)/2;
+    map<pair<int,int>,int>memo;
+    cout<<totalWays(nums,0,target,nums.size(),memo); 
+}
